@@ -39,7 +39,7 @@ src\runtime\host.c + ddraw.c + present.c + oracle.c + pcrecomp native32 ── b
 1. **`tools/gamefiles.py`** reads the ISO with pcrecomp's `iso_peek`, from its
    Joliet tree: the disc's names are long and mixed-case (`selectCar.bmp`,
    `BMP\steer\comp+30.bmp`), and the plain ISO9660 tree has only 8.3 ones.
-   It needs pcrecomp with Joliet support (`feat/iso-peek-joliet`).
+   It needs pcrecomp with Joliet support (`feat/iso-peek-joliet`, pcrecomp#92).
 2. **`tools/catalog.py`** runs pcrecomp `disasm32`: 22,304 functions, 97.2% of
    `.text`. It seeds every code-pointer table in `.data` first (below, and
    [bringup.md](bringup.md) 5).
@@ -119,7 +119,7 @@ in [bringup.md](bringup.md):
   seeds every run of 8 or more `.data` dwords pointing into `.text`
   (1,127 addresses), so the loops are catalogued, lifted and dispatchable.
 - Their span loops end `inc edi; loopne`. lift32 tested CF for
-  `loopne`/`loope`; it tests ZF now (pcrecomp `fix/lift32-loopcc-zf`).
+  `loopne`/`loope`; it tests ZF now (pcrecomp `fix/lift32-loopcc-zf`, #93).
 
 ### Guarded divides
 

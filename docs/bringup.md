@@ -105,7 +105,7 @@ hand-written texture-span loop. Three separate causes, found in this order:
 1. **`loopne` tested CF.** The span loop ends `inc edi; loopne`. lift32 lifted
    `loope`/`loopne` as `--ecx != 0 && _cf == 0`; they test ZF. Spans ended on
    whatever carry a `shr` had left. Fixed in the toolkit (pcrecomp
-   `fix/lift32-loopcc-zf`, with `tools/lift/test_loopcc.py`). The fault stayed.
+   `fix/lift32-loopcc-zf`, pcrecomp#93, with `tools/lift/test_loopcc.py`). The fault stayed.
 2. **A call to 0.** `--original` (the shipping code under the same host) was
    added to compare against, and the original faulted first, at address 0,
    called from `0x004707D5`: `jmp [0x00C53BD4]`, `glide2x.dll!_grSstQueryBoards@4`,

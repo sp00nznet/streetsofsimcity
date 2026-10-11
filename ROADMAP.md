@@ -12,7 +12,7 @@
   the radio). A windowed run on an offstage monitor starts and takes input;
   offstage's recording failed on this machine for any program, so there is
   no capture of it yet.
-- Upstream the two toolkit changes (pcrecomp `feat/iso-peek-joliet`,
+- Upstream the two toolkit changes (pcrecomp #92 `feat/iso-peek-joliet`, #93
   `fix/lift32-loopcc-zf`) and pin the toolkit to a release that has them.
 - Upstream the general mechanisms found here into pcrecomp, so the next game
   gets them for free:

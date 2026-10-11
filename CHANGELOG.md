@@ -10,7 +10,7 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); versions follo
   goes through the main menu, the career's name dialog and mission list and
   the garage, and drives the first mission's city on the software renderer,
   the same as the shipping code with the same input. Needs pcrecomp
-  `feat/iso-peek-joliet` and `fix/lift32-loopcc-zf`.
+  `feat/iso-peek-joliet` (pcrecomp#92) and `fix/lift32-loopcc-zf` (pcrecomp#93).
 - `tools/gamefiles.py` (the game off the CD or an ISO, by its Joliet names),
   `tools/catalog.py`, `run_lift.py`, the host (`src/runtime/`), `Setup.cmd`
   (Quick start), `tools/conformance.py` and a netlab recipe.

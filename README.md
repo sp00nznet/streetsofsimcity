@@ -64,7 +64,7 @@ game is in this repository and nothing is downloaded for you. The lifted C is
 generated on your machine from your copy and is never distributed.
 
 This needs two pcrecomp changes that are not on its `main` yet: Joliet ISOs
-(`feat/iso-peek-joliet`) and `loopne` (`fix/lift32-loopcc-zf`). Until they
+(`feat/iso-peek-joliet`, pcrecomp#92) and `loopne` (`fix/lift32-loopcc-zf`, pcrecomp#93). Until they
 land, use a pcrecomp checkout with both merged.
 
 ### Quick start
