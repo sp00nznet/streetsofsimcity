@@ -32,4 +32,9 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); versions follo
 - `--original --lifted VA,...`: bisect a lift bug inside the original.
 - `tools/catalog.py`: the code-pointer tables in `.data` seeded, so the
   rasterizer's unrolled loops are lifted.
+- `--open FILE`: answers the game's file dialog unseen, so Player's Choice
+  takes a SimCity 2000 city headless. Checked with cities from the SimCity
+  2000 CD and cities saved by the SimCity 2000 recomp; all drive.
+- A `SendMessageA(HWND_BROADCAST)` (the game's `WM_FONTCHANGE` at start) skips
+  hung windows: a suspended Settings window kept the game from starting.
 - Scripted keys answer `GetAsyncKeyState` as well as `GetKeyState`.

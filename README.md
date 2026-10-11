@@ -32,6 +32,7 @@ guarded divides is not handled the way the original handles it
 | Main menu, name dialog, career mission list | done |
 | Garage: the car in 3D, software renderer | done, same as the original code |
 | The city: driving (software renderer) | drives, same as the original code with the same script |
+| Player's Choice: SimCity 2000 cities | drives them, from the CD and saved by the SimCity 2000 recomp |
 | A whole mission | not played yet |
 | Sound (DirectSound), radio | not checked |
 | Network, OpenGL and Glide renderers | not started |
@@ -56,6 +57,8 @@ From headless recordings (`--headless --record`), the recompiled game:
 | ![missions](docs/img/missions.png) | ![garage](docs/img/garage.png) |
 | **The city** | **Through a tunnel** |
 | ![city](docs/img/city.png) | ![tunnel](docs/img/tunnel.png) |
+| **A SimCity 2000 city: NYC, saved by the SimCity 2000 recomp** | **Rio, from the SimCity 2000 CD** |
+| ![sc2k nyc](docs/img/sc2k-recomp-nyc.png) | ![sc2k rio](docs/img/sc2k-rio.png) |
 
 ## Getting Started
 
@@ -136,7 +139,7 @@ alias; use `py -3`), and a PATH change that needs a new terminal window.
 ```
 ssc [--run] [--headless] [--record out.mp4] [--frames N] [--shot N:file.bmp]
     [--diff A,B] [--key NAME@MS[+HOLD]] [--click X,Y@MS] [--scale N]
-    [--game game] [--watchdog S] [--native-trace] [--callbacks]
+    [--game game] [--open FILE] [--watchdog S] [--native-trace] [--callbacks]
     [--ddraw-trace] [--original [--lifted VA,...]]
 ```
 
@@ -150,6 +153,17 @@ run after S seconds and says where it was.
 
 Played windowed, the Video menu picks the scaling filter and window size,
 and F11 or Alt+Enter is fullscreen.
+
+Player's Choice drives any SimCity 2000 city, from the SimCity 2000 CD or
+saved by [its recomp](https://github.com/sp00nznet/simcity2000); both kinds
+are checked ([bringup.md](docs/bringup.md) 7). Played windowed, it asks for
+the `.sc2` file; `--open FILE` answers that dialog unseen, for headless runs:
+
+```
+build\ssc.exe --run --headless --record nyc.mp4 --open ..\simcity2000\game\CITIES\NYC.SC2 ^
+    --key ESC@6000 --click 255,183@14000 --click 368,392@22000 ^
+    --click 568,437@30000 --key UP@47000+30000
+```
 
 The game folder is mapped to a free drive letter for the run and offered to
 the game as its CD; the letter is removed when the game exits.

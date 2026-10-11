@@ -45,7 +45,7 @@ target_link_options(ssc PRIVATE /BASE:0x60000000 /FIXED:NO /DYNAMICBASE:NO
 set(GEN_OPT "/O2" CACHE STRING "optimisation for the generated C")
 set_source_files_properties(${GEN_SOURCES} PROPERTIES COMPILE_OPTIONS "/w;${GEN_OPT}")
 set_source_files_properties(${HOST_SOURCES} PROPERTIES COMPILE_OPTIONS "/W3")
-target_link_libraries(ssc PRIVATE user32 gdi32 kernel32 advapi32 winmm dwmapi d3d11 dxgi dxguid)
+target_link_libraries(ssc PRIVATE user32 gdi32 comdlg32 kernel32 advapi32 winmm dwmapi d3d11 dxgi dxguid)
 
 option(SSC_TRACE "record a ring buffer of lifted function entries" OFF)
 if(SSC_TRACE)

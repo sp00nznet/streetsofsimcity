@@ -93,10 +93,14 @@ code. What the host changes about the game's world:
   the other 35 Glide imports stay unbound (they are called only once a board
   was found). Left unbound, the query was a call to 0, which the lifted run
   skipped without popping its stdcall argument, and the original faulted on.
+- **Broadcasts skip hung windows.** The game's `WM_FONTCHANGE` broadcast at
+  start goes out with `SendMessageTimeoutA(SMTO_ABORTIFHUNG)`: a plain
+  `SendMessageA` to `HWND_BROADCAST` waits on every window of the desktop.
 - **Headless** (`--headless`, REPO_RULES section 13): every top-level window
   is cloaked, nothing takes the focus, and `MessageBoxA` goes to stderr.
   `--record` pipes the host's screen to ffmpeg at 30 fps against the wall
-  clock. `--key` and `--click` script the keyboard and mouse: keys are posted
+  clock. `--open FILE` answers the next
+  `GetOpenFileNameA` (Player's Choice's `.sc2`) unseen. `--key` and `--click` script the keyboard and mouse: keys are posted
   to the focus window and held for `GetKeyState` and `GetAsyncKeyState`
   (the game polls both while driving).
 

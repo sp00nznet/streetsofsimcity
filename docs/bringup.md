@@ -211,3 +211,44 @@ eh32 (the guest's own C++ exception dispatch), where a `catch (...)` takes it
 as the original's did. Until then `--original` dies when it hits this one
 (it does, on some runs, on the way into the city): the host emulates only the
 first catch.
+
+## 7. SimCity 2000 cities
+
+Player's Choice drives any SimCity 2000 city: it asks for a `.sc2` file with
+`GetOpenFileNameA`, then for a difficulty, then goes through the garage into
+that city. Two things stood in the way of testing it headless.
+
+- **The file dialog.** Headless, the common dialog is cloaked and waits for a
+  click that never comes (the watchdog found the game inside
+  `GetOpenFileNameA`). `--open FILE` answers the next one with FILE without
+  showing it, as SimCity 2000's recomp answers its own.
+- **A broadcast that hung.** After loading its font the game sends
+  `WM_FONTCHANGE` to every window with `SendMessageA(HWND_BROADCAST)`
+  (`sub_00538DE0`). That waits on every top-level window of the desktop, and
+  a suspended Windows Settings window never answered: the game stopped before
+  opening its own window, every run, and the original would have too. The
+  host sends a broadcast with `SendMessageTimeoutA(SMTO_ABORTIFHUNG)`, a
+  second per window.
+
+Checked on 2026-10-11, the lifted game and `--original`, the same script
+(`--key ESC@6000 --click 255,183@14000 --click 368,392@22000
+--click 568,437@30000 --key UP@47000+30000`), with four cities:
+
+| City | Made by | Lifted | Original |
+|---|---|---|---|
+| `NYC.SC2` | the SimCity 2000 CD | drives | drives |
+| `RIO.SC2` | the SimCity 2000 CD | drives | not run |
+| `SLOTS\1\nyc.sc2` | NYC saved by the recompiled SimCity 2000 | drives | drives |
+| `testcity.sc2` | a city built and saved in the recompiled SimCity 2000 | drives | not run |
+
+No faults in any run. Where the car starts is chosen at random each run, in
+the original as well, so the two runs of a city do not start in the same
+street. A city saved by the recomp writes the city-name chunk (`CNAM`) the
+CD's `NYC.SC2` lacks; Streets takes both.
+
+The Player's Choice click is made at 14 s, not 12: at 12 the menu is still
+coming up, takes the hover and drops the click.
+
+| Player's Choice | NYC, saved by the recompiled SimCity 2000 | Rio, from the CD |
+|---|---|---|
+| ![](img/players-choice.png) | ![](img/sc2k-recomp-nyc.png) | ![](img/sc2k-rio.png) |

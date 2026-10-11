@@ -13,6 +13,7 @@
 #define WIN32_LEAN_AND_MEAN
 #include <windows.h>
 #include <tlhelp32.h>
+#include <commdlg.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -232,6 +233,43 @@ static void shim_GetDiskFreeSpaceA(void) {
     RET(GetDiskFreeSpaceA(root, out[0], out[1], out[2], out[3]), 5);
 }
 
+/* ------------------------------------------------------------ the file dialog */
+
+/* Player's Choice asks for a city with GetOpenFileNameA ("SimCity 2000 Files
+ * (*.sc2)"); headless, that dialog is cloaked and waits forever. `--open FILE`
+ * answers the next one with FILE, without showing it (as SimCity 2000's
+ * recomp answers its own). One-shot: later dialogs are shown. */
+static char g_open[MAX_PATH];
+
+static void shim_GetOpenFileNameA(void) {
+    OPENFILENAMEA* o = (OPENFILENAMEA*)(uintptr_t)ARG(0);
+    if (!g_open[0]) { RET(GetOpenFileNameA(o), 1); return; }
+    const char *name = strrchr(g_open, '\\'), *dot = strrchr(g_open, '.');
+    lstrcpynA(o->lpstrFile, g_open, o->nMaxFile);
+    o->nFileOffset = (WORD)(name ? name - g_open + 1 : 0);
+    o->nFileExtension = (WORD)(dot && dot > name ? dot - g_open + 1 : 0);
+    if (o->lpstrFileTitle) lstrcpynA(o->lpstrFileTitle, g_open + o->nFileOffset, o->nMaxFileTitle);
+    fprintf(stderr, "[open] answered with %s\n", g_open);
+    g_open[0] = 0;
+    RET(TRUE, 1);
+}
+
+/* After AddFontResourceA the game tells every window with
+ * SendMessageA(HWND_BROADCAST, WM_FONTCHANGE) (sub_00538DE0), which waits on
+ * every top-level window of the desktop: one hung window anywhere (a suspended
+ * Settings app did it) and the game never starts. A broadcast skips hung
+ * windows and gives each a second; anything else goes straight through. */
+static void shim_SendMessageA(void) {
+    HWND h = (HWND)(uintptr_t)ARG(0);
+    if (h == HWND_BROADCAST) {
+        DWORD_PTR r = 0;
+        SendMessageTimeoutA(h, ARG(1), ARG(2), ARG(3), SMTO_ABORTIFHUNG, 1000, &r);
+        RET((uint32_t)r, 4);
+        return;
+    }
+    RET((uint32_t)SendMessageA(h, ARG(1), ARG(2), ARG(3)), 4);
+}
+
 /* Set by a rasterizer edge routine that returns to its caller's caller
  * (run_lift.py, "returns to the caller's caller"); the call site returns too. */
 uint32_t ssc_unwind;
@@ -272,6 +310,8 @@ static native32_shim_t g_shims[] = {
     { "ExitProcess", shim_ExitProcess },
     { "GetDriveTypeA", shim_GetDriveTypeA },
     { "GetDiskFreeSpaceA", shim_GetDiskFreeSpaceA },
+    { "GetOpenFileNameA", shim_GetOpenFileNameA },
+    { "SendMessageA", shim_SendMessageA },
     { "_grSstQueryBoards@4", shim_grSstQueryBoards },
     { "_grGlideInit@0", shim_grGlideInit },
     DDH_SHIMS,
@@ -408,6 +448,7 @@ int main(int argc, char** argv) {
         }
         else if (!strcmp(argv[i], "--scale") && i + 1 < argc) scale = atoi(argv[++i]);
         else if (!strcmp(argv[i], "--game") && i + 1 < argc) game = argv[++i];
+        else if (!strcmp(argv[i], "--open") && i + 1 < argc) GetFullPathNameA(argv[++i], MAX_PATH, g_open, NULL);
         else if (!strcmp(argv[i], "--watchdog") && i + 1 < argc) g_watchdog_s = strtoul(argv[++i], NULL, 0);
         else if (!strcmp(argv[i], "--native-trace")) native32_trace_native = 1;
         else if (!strcmp(argv[i], "--callbacks")) native32_trace_callbacks = 1;
