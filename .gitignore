@@ -1,0 +1,77 @@
+# Build artifacts
+build/
+build-*/
+out/
+cmake-build-*/
+*.obj
+*.o
+*.lib
+*.pdb
+*.ilk
+*.exp
+*.a
+
+# IDE
+.vs/
+.vscode/
+*.user
+*.suo
+CMakeSettings.json
+CMakeUserPresets.json
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+venv/
+
+# Scratch / regeneratable analysis output
+work/
+gen/
+*.asm
+*.json.bak
+
+# --- Original retail files: NOT redistributed in this repo ---
+# Streets of SimCity (c) 1997 Maxis. In copyright.
+# Bring your own copy and drop it in original/ yourself; the pipeline reads it
+# from there. Everything under game/ and disc/ is unpacked from that copy and
+# is equally not ours to ship.
+original/
+game/
+disc/
+extracted/
+*.iso
+*.ISO
+*.bin
+*.BIN
+*.cue
+*.img
+*.exe
+*.EXE
+*.dll
+*.DLL
+*.ModuleDLL
+*.zip
+*.7z
+*.rar
+*.cab
+
+# OS
+Thumbs.db
+Desktop.ini
+.DS_Store
+
+# Lifted output: a derivative work of the original binary, never committed
+src/recomp/
+src/seg*.c
+RecompiledFuncs/
+
+# Run output: logs, recordings, screenshots of the game
+scratch/
+*.mp4
+*.bmp
+
+# Setup's log and the shortcut it makes
+setup.log
+Streets of SimCity (recomp).cmd
