@@ -9,7 +9,7 @@ code, recompiled, running on a current Windows: no compatibility mode, no
 Part of the pcrecomp collection and its shared house style (layout, CLI,
 `--headless --record`, conformance harness); siblings on the same host are
 [mtm](https://github.com/sp00nznet/mtm) and
-[tiberiansun](https://github.com/sp00nznet/tiberiansun).
+[tiberiansun-recomp](https://github.com/sp00nznet/tiberiansun-recomp).
 
 ## Status: alpha — it drives
 
@@ -94,8 +94,8 @@ this repository:
 
 ```
 some-folder\
-  pcrecomp\       <- git clone https://github.com/sp00nznet/pcrecomp
-  ssc\            <- this repository
+  pcrecomp\           <- git clone https://github.com/sp00nznet/pcrecomp
+  streetsofsimcity\   <- this repository
 ```
 
 1. Python packages:

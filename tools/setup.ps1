@@ -22,7 +22,7 @@ function Say($t, $c = 'Gray') { Write-Host $t -ForegroundColor $c; Log $t }
 if ($Root -match '&') {
   Say "This folder's path has an '&' in it, which the build cannot handle:" 'Red'
   Say "  $Root" 'Red'
-  Say "Move the folder somewhere else (for example C:\ssc) and run Setup.cmd from there." 'Yellow'
+  Say "Move the folder somewhere else (for example C:\streetsofsimcity) and run Setup.cmd from there." 'Yellow'
   Read-Host "Press Enter to close" | Out-Null; exit 1
 }
 function Step($n, $t) { Write-Host ""; Say "[$n/$Steps] $t" 'Cyan' }
