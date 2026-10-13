@@ -171,8 +171,8 @@ the game as its CD; the letter is removed when the game exits.
 ## Building from source
 
 `build.cmd` builds locally with MSVC. Day to day the build runs on the
-[recomp-netlab](https://github.com/sp00nznet/recomp-netlab) farm with
-`netlab build ssc`, and `netlab check ssc` builds and runs the conformance
+[netlab](https://github.com/sp00nznet/netlab) farm with
+`netlab build streetsofsimcity`, and `netlab check streetsofsimcity` builds and runs the conformance
 harness.
 
 `py -3 tools\conformance.py` runs a scripted headless session and scores it:

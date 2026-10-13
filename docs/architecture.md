@@ -48,7 +48,7 @@ src\runtime\host.c + ddraw.c + present.c + oracle.c + pcrecomp native32 ── b
    whose text changed, so a lifter fix recompiles three files, not 56.
 4. **The build** compiles the lift, the host and pcrecomp's `native32` into
    one 32-bit exe linked at `0x60000000`, so the guest's `0x00400000` is free.
-   Day to day it runs on netlab (`netlab build ssc`, clang-cl); `build.cmd`
+   Day to day it runs on netlab (`netlab build streetsofsimcity`, clang-cl); `build.cmd`
    is the MSVC fallback and the Quick start's route.
 
 ## At run time

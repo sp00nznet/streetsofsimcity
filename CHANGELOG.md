@@ -13,7 +13,7 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); versions follo
   `feat/iso-peek-joliet` (pcrecomp#92) and `fix/lift32-loopcc-zf` (pcrecomp#93).
 - `tools/gamefiles.py` (the game off the CD or an ISO, by its Joliet names),
   `tools/catalog.py`, `run_lift.py`, the host (`src/runtime/`), `Setup.cmd`
-  (Quick start), `tools/conformance.py` and a netlab recipe.
+  (Quick start), `tools/conformance.py` and a netlab recipe (netlab#12).
 - The game folder is offered as the game's CD: a drive letter mapped onto it
   for the session, reported as a full CD-ROM.
 - The host's DirectDraw (from Monster Truck Madness 2) with a clipper, primary
